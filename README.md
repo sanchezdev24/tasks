@@ -1,16 +1,50 @@
-# tasks
 
-A new Flutter project.
+## ToDo APP
 
-## Getting Started
+aplicacion de tareas que sirve como examen como flutter sr developer
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Requisitos previos
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+[Flutter](https://flutter.dev/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Android Studio](https://developer.android.com/studio?hl=es-419)
+
+[XCode](https://xcodereleases.com/)
+
+
+## Para desarrollo Android:
+
+Android SDK
+
+Emulador Android o dispositivo físico
+
+## Para desarrollo iOS (solo macOS):
+
+Xcode (versión 12 o superior)
+
+CocoaPods
+
+Simulador iOS o dispositivo físico
+
+
+
+## Ejecutar la aplicación
+
+Para android
+
+```bash
+  flutter run
+```
+
+Para IOS
+
+```bash
+  flutter run -d ios
+```
+
+
+## Authors
+
+- [@romulo.sanchez](https://www.linkedin.com/in/romudev/)
+
