@@ -72,7 +72,7 @@ class TaskController extends GetxController {
     );
   }
 
-  Future<void> addTask({
+  Future<bool> addTask({
     required String name,
     String? description,
     int priority = 2,
@@ -89,6 +89,8 @@ class TaskController extends GetxController {
     );
 
     final result = await addTaskUsecase(task);
+    bool success = false;
+    
     result.fold(
           (failure) {
         _errorMessage.value = _getFailureMessage(failure);
@@ -101,6 +103,7 @@ class TaskController extends GetxController {
         );
       },
           (_) {
+        success = true;
         Get.snackbar(
           'Éxito',
           'Tarea agregada correctamente',
@@ -113,12 +116,15 @@ class TaskController extends GetxController {
     );
 
     _isLoading.value = false;
+    return success;
   }
 
-  Future<void> updateTask(TaskEntity updatedTask) async {
+  Future<bool> updateTask(TaskEntity updatedTask) async {
     _isLoading.value = true;
 
     final result = await updateTaskUsecase(updatedTask);
+    bool success = false;
+    
     result.fold(
           (failure) {
         _errorMessage.value = _getFailureMessage(failure);
@@ -131,6 +137,7 @@ class TaskController extends GetxController {
         );
       },
           (_) {
+        success = true;
         Get.snackbar(
           'Éxito',
           'Tarea actualizada correctamente',
@@ -143,10 +150,13 @@ class TaskController extends GetxController {
     );
 
     _isLoading.value = false;
+    return success;
   }
 
-  Future<void> deleteTask(String id) async {
+  Future<bool> deleteTask(String id) async {
     final result = await deleteTaskUsecase(id);
+    bool success = false;
+    
     result.fold(
           (failure) {
         _errorMessage.value = _getFailureMessage(failure);
@@ -159,6 +169,7 @@ class TaskController extends GetxController {
         );
       },
           (_) {
+        success = true;
         Get.snackbar(
           'Éxito',
           'Tarea eliminada correctamente',
@@ -169,6 +180,8 @@ class TaskController extends GetxController {
         loadTasks();
       },
     );
+    
+    return success;
   }
 
   Future<void> toggleTaskStatus(String id) async {

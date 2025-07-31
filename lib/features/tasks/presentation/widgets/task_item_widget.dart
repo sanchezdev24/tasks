@@ -35,7 +35,9 @@ class TaskItemWidget extends StatelessWidget {
                 direction: DismissDirection.endToStart,
                 background: _buildDismissBackground(),
                 confirmDismiss: (direction) => _confirmDelete(),
-                onDismissed: (direction) => controller.deleteTask(task.id),
+                onDismissed: (direction) async {
+                  await controller.deleteTask(task.id);
+                },
                 child: Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -229,7 +231,7 @@ class TaskItemWidget extends StatelessWidget {
 
   void _navigateToEdit() {
     Get.to(
-          () => AddEditTaskPage(task: task),
+      () => AddEditTaskPage(task: task),
       transition: Transition.rightToLeft,
       duration: Duration(milliseconds: 300),
     );

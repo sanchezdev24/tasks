@@ -4,6 +4,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../routes/app_routes.dart';
 import '../../domain/entities/task_entity.dart';
 import '../controllers/task_controller.dart';
 
@@ -85,7 +86,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
+          onPressed: () => _navigateToHome(),
         ),
       ),
       body: AnimatedBuilder(
@@ -243,6 +244,8 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
 
   void _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
+      bool success = false;
+      
       if (_isEditing) {
         final updatedTask = widget.task!.copyWith(
           name: _nameController.text.trim(),
@@ -251,9 +254,9 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
               : _descriptionController.text.trim(),
           priority: _selectedPriority,
         );
-        await _taskController.updateTask(updatedTask);
+        success = await _taskController.updateTask(updatedTask);
       } else {
-        await _taskController.addTask(
+        success = await _taskController.addTask(
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim().isEmpty
               ? null
@@ -262,8 +265,8 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
         );
       }
 
-      if (_taskController.errorMessage.isEmpty) {
-        Get.back();
+      if (success) {
+        _navigateToHome();
       }
     }
   }
@@ -283,10 +286,10 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
           ),
           ElevatedButton(
             onPressed: () async {
-              Get.back();
-              await _taskController.deleteTask(widget.task!.id);
-              if (_taskController.errorMessage.isEmpty) {
-                Get.back();
+              Get.back(); // Cerrar el diálogo
+              final success = await _taskController.deleteTask(widget.task!.id);
+              if (success) {
+                _navigateToHome();
               }
             },
             style: ElevatedButton.styleFrom(
@@ -297,5 +300,10 @@ class _AddEditTaskPageState extends State<AddEditTaskPage>
         ],
       ),
     );
+  }
+
+  void _navigateToHome() {
+    // Navegar de vuelta al home, removiendo todas las rutas anteriores
+    Get.offAllNamed(AppRoutes.taskList);
   }
 }
